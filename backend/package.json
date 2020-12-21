@@ -1,0 +1,24 @@
+{
+  "name": "fullstack",
+  "version": "1.0.0",
+  "description": "fullstack app with angular and nodeJS (express)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "serve": "node_modules/.bin/nodemon index"
+  },
+  "keywords": [
+    "angular",
+    "nodeJS",
+    "express",
+    "mongoDB"
+  ],
+  "author": "Roma Tereshchenko",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
