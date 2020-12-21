@@ -2,10 +2,14 @@
 
 # compiled output
 /dist
+/**/dist
 /tmp
+/**/tmp
 /out-tsc
+/**/out-tsc
 # Only exists if Bazel was run
 /bazel-out
+/**/bazel-out
 
 # dependencies
 /node_modules
@@ -17,6 +21,7 @@ speed-measure-plugin*.json
 
 # IDEs and editors
 /.idea
+/**/.idea
 .project
 .classpath
 .c9/
