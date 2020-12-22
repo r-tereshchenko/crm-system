@@ -10,6 +10,7 @@
 # Only exists if Bazel was run
 /bazel-out
 /**/bazel-out
+/**/config/
 
 # dependencies
 /node_modules

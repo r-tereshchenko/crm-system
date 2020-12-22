@@ -1,8 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-// For out server could handle cors requests
+const mongoose = require('mongoose');
 const cors = require('cors');
 const morgan = require('morgan');
+
+const keys = require('./config/keys')
 
 const analyticsRoutes = require('./routes/analytics');
 const authRoutes = require('./routes/auth');
@@ -11,6 +13,15 @@ const orderRoutes = require('./routes/order');
 const positionRoutes = require('./routes/position');
 
 const app = express();
+
+// Connecting DB
+mongoose.connect(keys.mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+})
+    .then(() => console.log('MongoDB is connected...'))
+    .catch((error) => console.log('Error: ', error))
 
 app.use(morgan('dev'));
 app.use(cors());
