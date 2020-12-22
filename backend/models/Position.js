@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const positionSchema = new mongoose.Schema({
     name: {
@@ -18,6 +18,6 @@ const positionSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId
     }
 
-})
+});
 
-module.exports = mongoose.model('positions', positionSchema)
+module.exports = mongoose.model('positions', positionSchema);

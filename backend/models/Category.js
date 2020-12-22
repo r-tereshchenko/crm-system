@@ -13,6 +13,6 @@ const categorySchema = new mongoose.Schema({
         ref: 'users',
         type: mongoose.Types.ObjectId
     }
-})
+});
 
-module.exports = mongoose.model('categories', categorySchema)
+module.exports = mongoose.model('categories', categorySchema);
