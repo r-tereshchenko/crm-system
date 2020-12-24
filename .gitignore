@@ -12,6 +12,7 @@
 /**/bazel-out
 /**/config/
 /**/uploads/**
+/**/src/theme/fullstack-theme-master/
 
 # dependencies
 /node_modules
