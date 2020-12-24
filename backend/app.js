@@ -33,6 +33,9 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+// For storing files on our server, thus we can see for e.g. http://localhost:8080/uploads/24122020-152851_629-cat.jpg
+app.use('/uploads', express.static('uploads'))
+
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/category', categoryRoutes);
