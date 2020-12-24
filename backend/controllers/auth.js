@@ -14,7 +14,7 @@ module.exports.login = async function (req, res) {
                 email: candidate.email,
                 userId: candidate._id
             }, keys.jwt, {
-                expiresIn: '1h'
+                expiresIn: 3600
             });
 
             res.status(200).json({

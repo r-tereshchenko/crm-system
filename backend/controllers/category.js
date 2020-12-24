@@ -1,29 +1,29 @@
 module.exports.getAllCategories = function (req, res) {
-    res.status(200).json({
-        getAllCategories: true
+    res.json({
+        message: 'All Categories'
     })
 }
 
 module.exports.getByCategoryId = function (req, res) {
-    res.status(200).json({
-        getByCategoryId: true
+    res.json({
+        message: 'getByCategoryId'
     })
 }
 
 module.exports.createCategory = function (req, res) {
-    res.status(200).json({
-        createCategory: true
+    res.json({
+        message: 'createCategory'
     })
 }
 
 module.exports.updateCategory = function (req, res) {
-    res.status(200).json({
-        updateCategory: true
+    res.json({
+        message: 'updateCategory'
     })
 }
 
 module.exports.removeCategory = function (req, res) {
-    res.status(200).json({
-        removeCategory: true
+    res.json({
+        message: 'removeCategory'
     })
 }
