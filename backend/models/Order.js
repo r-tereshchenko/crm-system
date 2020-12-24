@@ -23,7 +23,8 @@ const orderSchema = new mongoose.Schema({
         }
     ],
     user: {
-
+        ref: 'users',
+        type: mongoose.Schema.Types.ObjectId
     }
 });
 
