@@ -6,22 +6,22 @@ const controller = require('../controllers/position')
 
 router.get(
     '/:categoryId',
-    passport.authenticate('jwt', {session: false}, (req, res) => { res.send(req.user.profile) }),
+    passport.authenticate('jwt', {session: false}, null),
     controller.getPositionsByCategoryId
 );
 router.post(
     '/',
-    passport.authenticate('jwt', {session: false}, (req, res) => { res.send(req.user.profile) }),
+    passport.authenticate('jwt', {session: false}, null),
     controller.createPosition
 );
 router.patch(
     '/:id',
-    passport.authenticate('jwt', {session: false}, (req, res) => { res.send(req.user.profile) }),
+    passport.authenticate('jwt', {session: false}, null),
     controller.updatePosition
 );
 router.delete(
     '/:id',
-    passport.authenticate('jwt', {session: false}, (req, res) => { res.send(req.user.profile) }),
+    passport.authenticate('jwt', {session: false}, null),
     controller.removePosition
 );
 

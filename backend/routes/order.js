@@ -7,12 +7,12 @@ const controller = require('../controllers/order');
 
 router.get(
     '/',
-    passport.authenticate('jwt', {session: false}, (req, res) => { res.send(req.user.profile) }),
+    passport.authenticate('jwt', {session: false}, null),
     controller.getAllOrders
 );
 router.post(
     '/',
-    passport.authenticate('jwt', {session: false}, (req, res) => { res.send(req.user.profile) }),
+    passport.authenticate('jwt', {session: false}, null),
     controller.createOrder
 );
 
