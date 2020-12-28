@@ -1,18 +1,12 @@
 <nav>
   <div class="nav-wrapper grey darken-1">
     <a routerLink="/" class="brand-logo">Newborn</a>
-    <a data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
       <li routerLinkActive="active"><a routerLink="/login">Вход</a></li>
       <li routerLinkActive="active"><a routerLink="/register">Регистрация</a></li>
     </ul>
   </div>
 </nav>
-
-<ul class="sidenav" id="mobile-demo">
-  <li><a routerLink="/login">Sass</a></li>
-  <li><a routerLink="/register">Components</a></li>
-</ul>
 
 <div class="auth-block">
   <router-outlet></router-outlet>
