@@ -1,16 +1,49 @@
-<div class="card">
+<form
+  class="card"
+  [formGroup]="form"
+  (ngSubmit)="submitForm()"
+>
   <div class="card-content">
-    <span class="card-title">Создать аккаунт</span>
+    <span class="card-title">Create account</span>
     <div class="input-field">
-      <input id="email" type="email" required>
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        [ngClass]="{'invalid': emailControl.invalid && emailControl.touched}"
+      >
       <label for="email">Email:</label>
+      <div
+        class="helper-text red-text"
+        *ngIf="emailControl.invalid && emailControl.touched"
+      >
+        <span *ngIf="emailControl.errors.required">Email is required</span>
+        <span *ngIf="emailControl.errors.email">Email is not correct</span>
+      </div>
     </div>
     <div class="input-field">
-      <input id="password" type="password" required>
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        [ngClass]="{'invalid': passwordControl.invalid && passwordControl.touched}"
+      >
       <label for="password">Пароль:</label>
+      <div
+        class="helper-text red-text"
+        *ngIf="passwordControl.invalid && passwordControl.touched"
+      >
+        <span *ngIf="passwordControl.errors.required">Password is required</span>
+        <span *ngIf="passwordControl.errors.minlength">
+          Password must contain at least {{ passwordControl.errors.minlength.requiredLength }} symbols
+        </span></div>
     </div>
   </div>
   <div class="card-action">
-    <button class="modal-action btn waves-effect">Создать</button>
+    <button
+      class="modal-action btn waves-effect"
+      type="submit"
+      [disabled]="form.invalid || form.disabled"
+    >Create</button>
   </div>
-</div>
+</form>

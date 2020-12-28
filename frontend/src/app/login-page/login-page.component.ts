@@ -38,6 +38,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 
     this.route.queryParams.subscribe((params) => {
       if (params['registered']) {
+        console.log('Your acc has been registered, please log in with registered data')
       //  Please log in using your registered data
       } else if (params['accessDenied']) {
       //  please authorize
