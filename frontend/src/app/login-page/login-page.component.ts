@@ -42,6 +42,8 @@ export class LoginPageComponent implements OnInit, OnDestroy {
         MaterialService.toast('Your acc has been successfully registered, please login using your registered data')
       } else if (params['accessDenied']) {
         MaterialService.toast('Access denied, please authorize the system')
+      } else if (params['sessionExpired']) {
+        MaterialService.toast('Token has been expired, please log in again')
       }
     })
   }
