@@ -63,7 +63,6 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     this.authLoginSub = this.authS.login(this.form.value).subscribe(
       response => {
         this.router.navigate(['/overview'])
-        console.log('Login success: ', response);
       },
       error => {
         MaterialService.toast(error.error.message)

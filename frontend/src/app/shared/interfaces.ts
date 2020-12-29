@@ -6,3 +6,10 @@ export interface User {
 export interface LoginResponseToken {
   token: string
 }
+
+export interface Category {
+  name: string
+  imageSrc?: string
+  user?: string
+  _id?: string
+}
