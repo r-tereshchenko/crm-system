@@ -23,12 +23,12 @@ module.exports.login = async function (req, res) {
             })
         } else {
             res.status(401).json({
-                message: 'Wrong password'
+                message: `Invalid password`
             })
         }
     } else {
         res.status(404).json({
-            message: 'Email is not found'
+            message: `The email ${req.body.email} is not found`
         })
     }
 }
