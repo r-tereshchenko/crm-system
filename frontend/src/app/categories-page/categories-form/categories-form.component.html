@@ -5,7 +5,11 @@
     <span class="not-clickable">{{ isNewCategory ? 'adding' : 'editing'}} category</span>
   </h4>
   <span>
-    <button class="btn btn-small red">
+    <button
+      *ngIf="!isNewCategory"
+      class="btn btn-small red"
+      (click)="deleteCategory()"
+    >
       <i class="material-icons">delete</i>
     </button>
   </span>

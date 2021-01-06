@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { switchMap } from 'rxjs/operators';
@@ -25,6 +25,7 @@ export class CategoriesFormComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private categoriesS: CategoriesService
   ) {}
 
@@ -79,6 +80,24 @@ export class CategoriesFormComponent implements OnInit {
     }
 
     reader.readAsDataURL(file)
+  }
+
+  deleteCategory() {
+    const decision = window.confirm(`Are you sure you want to remove ${this.editingCategory.name} category`)
+
+    if (decision) {
+      this.categoriesS.deleteCategory(this.editingCategory._id).subscribe(
+        (response) => {
+          MaterialService.toast(response.message)
+        },
+        error => {
+          MaterialService.toast(error.error.message)
+        },
+        () => {
+          this.router.navigate(['/categories'])
+        }
+      )
+    }
   }
 
   submitForm() {
