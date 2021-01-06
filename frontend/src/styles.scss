@@ -1,6 +1,10 @@
 @import "~materialize-css/dist/css/materialize.min.css";
 @import "theme/styles.min.css";
 
+.d-none {
+  display: none;
+}
+
 .not-clickable {
   cursor: not-allowed;
 }

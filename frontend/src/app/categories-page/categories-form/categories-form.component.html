@@ -30,7 +30,15 @@
     </div>
 
     <div>
+      <input
+        type="file"
+        #uploadInput
+        (change)="onFileUpload($event)"
+        class="d-none"
+      >
       <button
+        (click)="triggerUploadInput()"
+        [disabled]="form.disabled"
         type="button"
         class="waves-effect waves-light btn orange lighten-2 mb2"
       >
@@ -51,7 +59,11 @@
   </form>
 
   <div class="col s12 l4 center">
-    <img class="responsive-img" style="height: 200px" src="cake.jpg">
+    <img
+      class="responsive-img h-200"
+      [src]="imagePreview"
+      *ngIf="imagePreview"
+    >
   </div>
 </div>
 

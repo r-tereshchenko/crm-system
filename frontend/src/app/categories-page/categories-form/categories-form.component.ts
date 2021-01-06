@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { CategoriesService } from '../../shared/services/categories.service';
 import { Category } from '../../shared/interfaces';
@@ -15,8 +15,13 @@ import { MaterialService } from '../../shared/classes/material.service';
   styleUrls: ['./categories-form.component.scss']
 })
 export class CategoriesFormComponent implements OnInit {
+
+  @ViewChild('uploadInput') inputRef: ElementRef
   form: FormGroup
+  image: File
+  imagePreview: string | ArrayBuffer
   isNewCategory = true
+  editingCategory: Category
 
   constructor(
     private route: ActivatedRoute,
@@ -44,6 +49,8 @@ export class CategoriesFormComponent implements OnInit {
           this.form.enable()
           if (category) {
             this.categoryNameControl.patchValue(category.name)
+            this.imagePreview = category.imageSrc
+            this.editingCategory = category
             MaterialService.updateTextInputs()
           }
         },
@@ -58,7 +65,47 @@ export class CategoriesFormComponent implements OnInit {
     return this.form.get('categoryName')
   }
 
-  submitForm() {
+  triggerUploadInput() {
+    this.inputRef.nativeElement.click()
+  }
 
+  onFileUpload(event: Event) {
+    const file = (event.target as HTMLInputElement).files[0]
+    this.image = file
+
+    const reader = new FileReader()
+    reader.onload = () => {
+      this.imagePreview = reader.result
+    }
+
+    reader.readAsDataURL(file)
+  }
+
+  submitForm() {
+    this.form.disable()
+    let obs$: Observable<Category>
+    let toastMessage = ''
+    let categoryAction = ''
+
+    if (this.isNewCategory) {
+      obs$ = this.categoriesS.createCategory(this.form.value.categoryName, this.image)
+      toastMessage = 'Category has been created successfully'
+      categoryAction = 'creating'
+    } else {
+      obs$ = this.categoriesS.updateCategory(this.editingCategory._id, this.form.value.categoryName, this.image || null)
+      toastMessage = 'Category has been updated successfully'
+      categoryAction = 'editing'
+    }
+
+    obs$.subscribe((
+      category) => {
+        this.form.enable()
+        MaterialService.toast(toastMessage)
+        if (categoryAction === 'creating') this.form.reset()
+      },
+      error => {
+        this.form.enable()
+        MaterialService.toast(error)
+      })
   }
 }

@@ -48,7 +48,7 @@ module.exports.updateCategory = async function (req, res) {
             {$set: updated},
             {new: true}
             )
-
+        res.status(200).json(updateCategory)
     } catch (error) {
         errorHandler(res, error)
     }
