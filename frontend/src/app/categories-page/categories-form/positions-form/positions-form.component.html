@@ -15,13 +15,13 @@
         <a
           *ngFor="let position of positions"
           class="collection-item collection-item-icon"
-          (click)="selectPosition(position)"
+          (click)="editPosition(position)"
         >
         <span>
             {{position.name}} <strong>{{position.cost}} ua.</strong>
         </span>
           <span>
-            <i class="material-icons">delete</i>
+            <i class="material-icons" (click)="deletePosition($event, position)">delete</i>
         </span>
         </a>
       </div>
@@ -35,24 +35,54 @@
   </div>
 </div>
 
-<div #modal class="modal">
-  <div class="modal-content">
-    <h4 class="mb1">Add position</h4>
-    <div class="input-field">
-      <input id="pos-name" type="text" required>
-      <label for="pos-name">Name</label>
+<form [formGroup]="modalForm" (ngSubmit)="submitForm()">
+  <div #modal class="modal">
+    <div class="modal-content">
+      <h4 class="mb1">Add position</h4>
+      <div class="input-field">
+        <input
+          id="pos-name"
+          type="text"
+          formControlName="name"
+          [ngClass]="{'invalid': positionName.invalid && positionName.touched}"
+        >
+        <label for="pos-name">Name</label>
+        <span
+          *ngIf="positionName.invalid && positionName.touched"
+          class="helper-text red-text"
+        >
+          This field is required.
+        </span>
+      </div>
+      <div class="input-field">
+        <input
+          id="pos-cost"
+          type="number"
+          formControlName="cost"
+          [ngClass]="{'invalid': positionCost.invalid && positionCost.touched}"
+        >
+        <label for="pos-cost">Price</label>
+        <span
+          *ngIf="positionCost.invalid && positionCost.touched"
+          class="helper-text red-text"
+        >
+        Please, enter correct value for the 'cost' field. The value must be greater or equal to 1.
+      </span>
+      </div>
     </div>
-    <div class="input-field">
-      <input id="pos-cost" type="text" required>
-      <label for="pos-cost">Price</label>
+    <div class="modal-footer">
+      <button
+        class="waves-effect waves-black btn-flat"
+        type="button"
+        (click)="closeSelectingPosition()"
+        [disabled]="modalForm.disabled"
+      >Cancel
+      </button>
+      <button
+        type="submit"
+        class="btn waves-effect"
+        [disabled]="modalForm.invalid || modalForm.disabled"
+      >Save</button>
     </div>
   </div>
-  <div class="modal-footer">
-    <button
-      class="modal-action waves-effect waves-black btn-flat"
-      type="button"
-      (click)="closeSelectingPosition()"
-    >Cancel</button>
-    <button class="modal-action btn waves-effect">Save</button>
-  </div>
-</div>
+</form>

@@ -46,7 +46,7 @@ module.exports.updatePosition = async function (req, res) {
             {$set: req.body},
             {new: true}
             )
-        req.status(200).json(updatedPosition)
+        res.status(200).json(updatedPosition)
     } catch (error) {
         errorHandler(res, error)
     }

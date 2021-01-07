@@ -9,9 +9,10 @@ export interface MaterialModal {
 }
 
 export class MaterialService {
-  static toast(message: string) {
+  static toast(message: string, duration: number = 4000) {
     M.toast({
-      html: message
+      html: message,
+      displayLength: duration
     })
   }
 
