@@ -71,4 +71,7 @@
   </div>
 </div>
 
-<app-positions-form></app-positions-form>
+<app-positions-form
+  *ngIf="editingCategory?._id"
+  [categoryId]="editingCategory._id"
+></app-positions-form>

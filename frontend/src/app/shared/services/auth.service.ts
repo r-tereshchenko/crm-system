@@ -22,7 +22,7 @@ export class AuthService {
     return this.token
   }
 
-  setToken(token: string): void {
+  setToken(token: string | null): void {
     this.token = token
   }
 
@@ -37,8 +37,8 @@ export class AuthService {
   }
 
   logout() {
-    this.setToken(null);
     localStorage.clear();
+    this.setToken(null);
   }
 
   isAuthenticated(): boolean {

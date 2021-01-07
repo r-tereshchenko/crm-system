@@ -39,11 +39,15 @@ export class TokenInterceptor implements HttpInterceptor {
 
   private handleError(error: HttpErrorResponse): Observable<any> {
     if (error.status === 401) {
-      this.router.navigate(['/login'], {
-        queryParams: {
-          sessionExpired: true
-        }
-      })
+      const extras: {queryParams?: { sessionExpired: boolean }} = {}
+
+      if (localStorage.getItem('auth-token')) {
+        extras['queryParams'] = {
+            sessionExpired: true
+          }
+      }
+
+      this.router.navigate(['/login'], extras)
     }
 
     return throwError(error)

@@ -4,7 +4,7 @@
   (ngSubmit)="submitForm()"
 >
   <div class="card-content">
-    <span class="card-title">Войти в систему</span>
+    <span class="card-title">Enter the system</span>
     <div class="input-field">
       <input
         id="email"
@@ -28,7 +28,7 @@
         formControlName="password"
         [ngClass]="{'invalid': passwordControl.invalid && passwordControl.touched}"
       >
-      <label for="password">Пароль:</label>
+      <label for="password">Password:</label>
       <div
         class="helper-text red-text"
         *ngIf="passwordControl.invalid && passwordControl.touched"
@@ -44,6 +44,6 @@
       class="modal-action btn waves-effect"
       type="submit"
       [disabled]="form.invalid || form.disabled"
-    >Войти</button>
+    >Enter</button>
   </div>
 </form>

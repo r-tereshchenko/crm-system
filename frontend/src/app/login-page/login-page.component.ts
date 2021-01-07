@@ -65,8 +65,13 @@ export class LoginPageComponent implements OnInit, OnDestroy {
         this.router.navigate(['/overview'])
       },
       error => {
-        MaterialService.toast(error.error.message)
+        console.log('Error login: ', error)
         this.form.enable()
+        if (error.status === 504) {
+          MaterialService.toast(error.message)
+        } else {
+          MaterialService.toast(error.error.message)
+        }
       }
       )
   }

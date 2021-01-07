@@ -28,7 +28,7 @@ module.exports.login = async function (req, res) {
         }
     } else {
         res.status(404).json({
-            message: `The email ${req.body.email} is not found`
+            message: `Email ${req.body.email} is not found`
         })
     }
 }
