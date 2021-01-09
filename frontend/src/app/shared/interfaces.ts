@@ -15,11 +15,12 @@ export interface Category {
 }
 
 export interface Position {
+  _id?: string
   name: string
   cost: number
   category: string
   user?: string
-  _id?: string
+  quantity?: number
 }
 
 export interface Message {
