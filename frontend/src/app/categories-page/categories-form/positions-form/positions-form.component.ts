@@ -54,7 +54,7 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
     return this.modalForm.get('cost')
   }
 
-  deletePosition(event: Event, position: Position) {
+  deletePosition(event: Event, position: Position): void {
     event.stopPropagation()
     const decision = window.confirm(`Are you sure you want to remove "${position.name}" position?`)
 
@@ -63,14 +63,16 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
         response => {
           const positionIndex = this.positions.findIndex(p => p._id === position._id)
           this.positions.splice(positionIndex, 1)
-          MaterialService.toast(response.message, 3000)
+          MaterialService.toast(response.message, {class: 'success'})
         },
-        error => {}
+        error => {
+          MaterialService.toast(error.error.message, {class: 'danger'})
+        }
       )
     }
   }
 
-  submitForm() {
+  submitForm(): void {
     this.modalForm.disable()
 
     const newPosition: Position = {
@@ -78,7 +80,7 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
       category: this.categoryId
     }
 
-    const completed = () => {
+    const completed = (): void => {
       this.closeSelectingPosition()
       this.modalForm.reset()
       this.modalForm.enable()
@@ -90,18 +92,18 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
         (position) => {
           const index = this.positions.findIndex(p => p._id === position._id)
           this.positions[index] = position
-          MaterialService.toast('Position has been updated')
+          MaterialService.toast('Position has been updated', {class: 'success'})
         },
-        error => MaterialService.toast(error.error.message),
+        error => MaterialService.toast(error.error.message, {class: 'danger'}),
         completed
       )
     } else {
       this.positionS.createPosition(newPosition).subscribe(
         (position) => {
           this.positions.push(position)
-          MaterialService.toast('Position has been created')
+          MaterialService.toast('Position has been created', {class: 'success'})
         },
-        error => MaterialService.toast(error.error.message),
+        error => MaterialService.toast(error.error.message, {class: 'danger'}),
         completed
       )
     }

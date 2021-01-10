@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from '../shared/services/auth.service';
-import { MaterialService } from '../shared/classes/material.service';
+import { MaterialService, toastStatus } from '../shared/classes/material.service';
 
 @Component({
   selector: 'app-login-page',
@@ -39,11 +39,20 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 
     this.route.queryParams.subscribe((params) => {
       if (params['registered']) {
-        MaterialService.toast('Your acc has been successfully registered, please login using your registered data')
+        MaterialService.toast(
+          'Your acc has been successfully registered, please login using your registered data',
+          {class: 'success'}
+        )
       } else if (params['accessDenied']) {
-        MaterialService.toast('Access denied, please authorize the system')
+        MaterialService.toast(
+          'Access denied, please authorize the system',
+          {class: 'danger'}
+        )
       } else if (params['sessionExpired']) {
-        MaterialService.toast('Token has been expired, please log in again')
+        MaterialService.toast(
+          'Token has been expired, please log in again',
+          {class: 'warning'}
+        )
       }
     })
   }
@@ -68,9 +77,9 @@ export class LoginPageComponent implements OnInit, OnDestroy {
         console.log('Error login: ', error)
         this.form.enable()
         if (error.status === 504) {
-          MaterialService.toast(error.message)
+          MaterialService.toast(error.message, {class: 'warning'})
         } else {
-          MaterialService.toast(error.error.message)
+          MaterialService.toast(error.error.message, {class: 'warning'})
         }
       }
       )

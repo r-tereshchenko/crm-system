@@ -8,11 +8,19 @@ export interface MaterialModal {
   destroy?(): void
 }
 
+export interface ToastOptions {
+  duration?: number
+  class?: toastStatus
+}
+
+export type toastStatus = 'success' | 'warning' | 'danger' | 'default'
+
 export class MaterialService {
-  static toast(message: string, duration: number = 4000) {
+  static toast(message: string, options: ToastOptions = {}) {
     M.toast({
       html: message,
-      displayLength: duration
+      displayLength: options.duration || 4000,
+      classes: `toast-${options.class}` || ''
     })
   }
 

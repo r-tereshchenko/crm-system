@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
@@ -27,7 +27,8 @@ export class CategoriesFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private categoriesS: CategoriesService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -62,15 +63,15 @@ export class CategoriesFormComponent implements OnInit {
       )
   }
 
-  get categoryNameControl() {
+  get categoryNameControl(): AbstractControl {
     return this.form.get('categoryName')
   }
 
-  triggerUploadInput() {
+  triggerUploadInput(): void {
     this.inputRef.nativeElement.click()
   }
 
-  onFileUpload(event: Event) {
+  onFileUpload(event: Event): void {
     const file = (event.target as HTMLInputElement).files[0]
     this.image = file
 
@@ -82,16 +83,16 @@ export class CategoriesFormComponent implements OnInit {
     reader.readAsDataURL(file)
   }
 
-  deleteCategory() {
+  deleteCategory(): void {
     const decision = window.confirm(`Are you sure you want to remove ${this.editingCategory.name} category`)
 
     if (decision) {
       this.categoriesS.deleteCategory(this.editingCategory._id).subscribe(
         (response) => {
-          MaterialService.toast(response.message)
+          MaterialService.toast(response.message, {class: 'success'})
         },
         error => {
-          MaterialService.toast(error.error.message)
+          MaterialService.toast(error.error.message, {class: 'danger'})
         },
         () => {
           this.router.navigate(['/categories'])
@@ -100,7 +101,7 @@ export class CategoriesFormComponent implements OnInit {
     }
   }
 
-  submitForm() {
+  submitForm(): void {
     this.form.disable()
     let obs$: Observable<Category>
     let toastMessage = ''
@@ -116,15 +117,15 @@ export class CategoriesFormComponent implements OnInit {
       categoryAction = 'editing'
     }
 
-    obs$.subscribe((
-      category) => {
+    obs$.subscribe(
+      (category) => {
         this.form.enable()
-        MaterialService.toast(toastMessage)
+        MaterialService.toast(toastMessage, {class: 'success'})
         if (categoryAction === 'creating') this.form.reset()
       },
       error => {
         this.form.enable()
-        MaterialService.toast(error)
+        MaterialService.toast(error, {class: 'danger'})
       })
   }
 }

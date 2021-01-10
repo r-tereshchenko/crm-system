@@ -1,10 +1,30 @@
 @import "~materialize-css/dist/css/materialize.min.css";
 @import "theme/styles.min.css";
 
+// Variables
+$toast-success-color: #4bb543;
+$toast-warning-color: #e8bc00;
+$toast-danger-color: #ce0000;
+
+
 .d-none {
   display: none;
 }
 
 .not-clickable {
   cursor: not-allowed;
+}
+
+.toast {
+  font-weight: bold;
+
+  &-success {
+    background-color: $toast-success-color;
+  }
+  &-warning {
+    background-color: $toast-warning-color;
+  }
+  &-danger {
+    background-color: $toast-danger-color;
+  }
 }

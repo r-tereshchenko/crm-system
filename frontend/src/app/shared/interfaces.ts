@@ -26,3 +26,18 @@ export interface Position {
 export interface Message {
   message: string
 }
+
+export interface Order {
+  list: OrderPosition[]
+  _id?: string
+  date?: Date
+  order?: number
+  user?: string
+}
+
+export interface OrderPosition {
+  name: string
+  cost: number
+  quantity: number
+  _id?: string
+}

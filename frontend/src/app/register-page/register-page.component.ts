@@ -46,7 +46,7 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
     return this.form.get('password')
   }
 
-  submitForm() {
+  submitForm(): void {
     this.form.disable()
     this.authRegisterSub = this.authS.register(this.form.value)
       .subscribe(
@@ -58,7 +58,7 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
           })
         },
         error => {
-          MaterialService.toast(error.error.message)
+          MaterialService.toast(error.error.message, {class: 'danger'})
           this.form.enable()
         }
       )

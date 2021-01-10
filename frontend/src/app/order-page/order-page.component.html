@@ -6,11 +6,14 @@
       Add item
     </span>
   </h4>
-  <button class="waves-effect btn grey darken-1 shopping-cart" (click)="openCart()">
+  <button
+    class="waves-effect btn grey darken-1 shopping-cart"
+    (click)="openCart()"
+    [disabled]="orderS.cart.length === 0"
+  >
     <span>shopping cart</span>
     <i class="material-icons">add_shopping_cart</i>
   </button>
-  <button class="waves-effect btn" (click)="checkout()">checkout</button>
 </div>
 
 <router-outlet></router-outlet>
@@ -22,40 +25,34 @@
       <thead>
       <tr>
         <th>Name</th>
-        <th>Count</th>
-        <th>Price</th>
+        <th class="center">Quantity</th>
+        <th class="center">Price</th>
         <th></th>
       </tr>
       </thead>
 
-      <tbody>
-      <tr>
-        <td>Alvin</td>
-        <td>3</td>
-        <td>$0.87</td>
-        <td><i class="material-icons pointer">delete</i></td>
-      </tr>
-      <tr>
-        <td>Alan</td>
-        <td>1</td>
-        <td>$3.76</td>
-        <td><i class="material-icons pointer">delete</i></td>
-
-      </tr>
-      <tr>
-        <td>Jonathan</td>
-        <td>2</td>
-        <td>$7.00</td>
-        <td><i class="material-icons pointer">delete</i></td>
+      <tbody *ngIf="orderS.cart.length !== 0; else empty">
+      <tr *ngFor="let item of orderS.cart">
+        <td>{{item.name}}</td>
+        <td class="center">{{item.quantity}}</td>
+        <td class="center">{{item.cost}}</td>
+        <td><i class="material-icons pointer" (click)="removePosition(item)">delete</i></td>
       </tr>
       </tbody>
+      <ng-template #empty>
+        <p>Your shopping cart is empty.</p>
+      </ng-template>
     </table>
-    <div class="order-summary">
-      <p>Total price <strong>22 231 uah</strong></p>
+    <div *ngIf="orderS.cart.length !== 0" class="order-summary">
+      <p>Total price <strong>{{orderS.totalPrice}} uah</strong></p>
     </div>
   </div>
   <div class="modal-footer">
     <button (click)="closeCart()" class="waves-effect waves-black btn-flat">Cancel</button>
-    <button (click)="makeOrder()" class="btn waves-effect">Accept</button>
+    <button
+      (click)="confirmOrder()"
+      class="btn waves-effect"
+      [disabled]="orderS.cart.length === 0"
+    >Accept</button>
   </div>
 </div>

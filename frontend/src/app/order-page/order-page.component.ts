@@ -3,12 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { MaterialModal, MaterialService } from '../shared/classes/material.service';
 import { OrderService } from './order.service';
+import { OrderPosition } from '../shared/interfaces';
 
 @Component({
   selector: 'app-order-page',
   templateUrl: './order-page.component.html',
   styleUrls: ['./order-page.component.scss'],
-  providers: [OrderService]
+  // providers: [OrderService]
 })
 export class OrderPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -19,7 +20,7 @@ export class OrderPageComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private orderS: OrderService
+    public orderS: OrderService
   ) {}
 
   ngOnInit(): void {
@@ -28,15 +29,15 @@ export class OrderPageComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   }
 
-  openCart() {
+  openCart(): void {
     this.orderModal.open()
   }
 
-  closeCart() {
+  closeCart(): void {
     this.orderModal.close()
   }
 
-  makeOrder() {
+  confirmOrder(): void {
     this.orderModal.close()
   }
 
@@ -48,7 +49,7 @@ export class OrderPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.orderModal.destroy()
   }
 
-  checkout() {
-    console.log('cart: ', this.orderS.cart)
+  removePosition(item: OrderPosition) {
+    this.orderS.remove(item)
   }
 }

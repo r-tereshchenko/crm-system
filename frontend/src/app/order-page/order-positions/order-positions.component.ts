@@ -7,6 +7,7 @@ import { map, switchMap } from 'rxjs/operators';
 import { PositionService } from '../../shared/services/position.service';
 import { OrderService } from '../order.service';
 import { Position } from '../../shared/interfaces';
+import { MaterialService } from '../../shared/classes/material.service';
 
 @Component({
   selector: 'app-order-positions',
@@ -37,7 +38,11 @@ export class OrderPositionsComponent implements OnInit {
     )
   }
 
-  addToOrder(position: Position) {
+  addToCart(position: Position): void {
     this.orderS.add(position)
+    MaterialService.toast(
+      `${position.name}: x${position.quantity} - has been added to your shopping cart`,
+      {class: 'success'}
+    )
   }
 }
