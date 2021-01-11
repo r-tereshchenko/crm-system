@@ -9,7 +9,7 @@
   <button
     class="waves-effect btn grey darken-1 shopping-cart"
     (click)="openCart()"
-    [disabled]="orderS.cart.length === 0"
+    [disabled]="orderStorageS.cart.length === 0"
   >
     <span>shopping cart</span>
     <i class="material-icons">add_shopping_cart</i>
@@ -31,8 +31,8 @@
       </tr>
       </thead>
 
-      <tbody *ngIf="orderS.cart.length !== 0; else empty">
-      <tr *ngFor="let item of orderS.cart">
+      <tbody *ngIf="orderStorageS.cart.length !== 0; else empty">
+      <tr *ngFor="let item of orderStorageS.cart">
         <td>{{item.name}}</td>
         <td class="center">{{item.quantity}}</td>
         <td class="center">{{item.cost}}</td>
@@ -43,16 +43,20 @@
         <p>Your shopping cart is empty.</p>
       </ng-template>
     </table>
-    <div *ngIf="orderS.cart.length !== 0" class="order-summary">
-      <p>Total price <strong>{{orderS.totalPrice}} uah</strong></p>
+    <div *ngIf="orderStorageS.cart.length !== 0" class="order-summary">
+      <p>Total price <strong>{{orderStorageS.totalPrice}} uah</strong></p>
     </div>
   </div>
   <div class="modal-footer">
-    <button (click)="closeCart()" class="waves-effect waves-black btn-flat">Cancel</button>
+    <button
+      (click)="closeCart()"
+      class="waves-effect waves-black btn-flat"
+      [disabled]="isPending"
+    >Cancel</button>
     <button
       (click)="confirmOrder()"
       class="btn waves-effect"
-      [disabled]="orderS.cart.length === 0"
-    >Accept</button>
+      [disabled]="orderStorageS.cart.length === 0 || isPending"
+    >Confirm</button>
   </div>
 </div>

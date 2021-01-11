@@ -1,9 +1,12 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { Subscription } from 'rxjs';
+
 import { MaterialModal, MaterialService } from '../shared/classes/material.service';
-import { OrderService } from './order.service';
-import { OrderPosition } from '../shared/interfaces';
+import { OrderStorageService } from './order-storage.service';
+import { Order, OrderPosition } from '../shared/interfaces';
+import { OrdersService } from '../shared/services/orders.service';
 
 @Component({
   selector: 'app-order-page',
@@ -16,15 +19,20 @@ export class OrderPageComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('orderModal') modalRef: ElementRef
   orderModal: MaterialModal
   isAddingItem: boolean
+  isPending = false
+
+  // Subscriptions
+  createOrderSub: Subscription
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    public orderS: OrderService
+    public orderStorageS: OrderStorageService,
+    private ordersS: OrdersService
   ) {}
 
   ngOnInit(): void {
-    this.route.url.subscribe((url) => {
+    this.route.url.subscribe(() => {
       this.isAddingItem = !!this.route.snapshot.firstChild.params['id']
     })
   }
@@ -37,8 +45,32 @@ export class OrderPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.orderModal.close()
   }
 
+  removePosition(item: OrderPosition) {
+    this.orderStorageS.remove(item)
+  }
+
   confirmOrder(): void {
-    this.orderModal.close()
+    this.isPending = true
+    const order: Order = {
+      list: this.orderStorageS.cart.map((item => {
+        delete item._id
+        return item
+      }))
+    }
+
+    this.createOrderSub = this.ordersS.createOrder(order).subscribe(
+      (newOrder) => {
+        MaterialService.toast(`Order №${newOrder.order} has been successfully confirmed.`, {status: 'success'})
+        this.orderStorageS.clear()
+      },
+      (error) => {
+        MaterialService.toast(error.error.message, {status: 'danger'})
+      },
+      () => {
+        this.orderModal.close()
+        this.isPending = false
+      }
+    )
   }
 
   ngAfterViewInit(): void {
@@ -47,9 +79,9 @@ export class OrderPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.orderModal.destroy()
-  }
-
-  removePosition(item: OrderPosition) {
-    this.orderS.remove(item)
+    if (this.createOrderSub) {
+      this.createOrderSub.unsubscribe()
+      this.createOrderSub = null
+    }
   }
 }

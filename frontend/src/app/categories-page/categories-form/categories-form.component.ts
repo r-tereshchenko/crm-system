@@ -89,10 +89,10 @@ export class CategoriesFormComponent implements OnInit {
     if (decision) {
       this.categoriesS.deleteCategory(this.editingCategory._id).subscribe(
         (response) => {
-          MaterialService.toast(response.message, {class: 'success'})
+          MaterialService.toast(response.message, {status: 'success'})
         },
         error => {
-          MaterialService.toast(error.error.message, {class: 'danger'})
+          MaterialService.toast(error.error.message, {status: 'danger'})
         },
         () => {
           this.router.navigate(['/categories'])
@@ -120,12 +120,12 @@ export class CategoriesFormComponent implements OnInit {
     obs$.subscribe(
       (category) => {
         this.form.enable()
-        MaterialService.toast(toastMessage, {class: 'success'})
+        MaterialService.toast(toastMessage, {status: 'success'})
         if (categoryAction === 'creating') this.form.reset()
       },
       error => {
         this.form.enable()
-        MaterialService.toast(error, {class: 'danger'})
+        MaterialService.toast(error, {status: 'danger'})
       })
   }
 }

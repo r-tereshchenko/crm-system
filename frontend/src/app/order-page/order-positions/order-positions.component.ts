@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
 import { PositionService } from '../../shared/services/position.service';
-import { OrderService } from '../order.service';
+import { OrderStorageService } from '../order-storage.service';
 import { Position } from '../../shared/interfaces';
 import { MaterialService } from '../../shared/classes/material.service';
 
@@ -21,7 +21,7 @@ export class OrderPositionsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private positionsS: PositionService,
-    private orderS: OrderService
+    private orderS: OrderStorageService
   ) { }
 
   ngOnInit(): void {
@@ -42,7 +42,7 @@ export class OrderPositionsComponent implements OnInit {
     this.orderS.add(position)
     MaterialService.toast(
       `${position.name}: x${position.quantity} - has been added to your shopping cart`,
-      {class: 'success'}
+      {status: 'success'}
     )
   }
 }

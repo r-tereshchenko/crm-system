@@ -50,7 +50,7 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
     this.form.disable()
     this.authRegisterSub = this.authS.register(this.form.value)
       .subscribe(
-        (response) => {
+        () => {
           this.router.navigate(['/login'], {
             queryParams: {
               registered: true
@@ -58,7 +58,7 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
           })
         },
         error => {
-          MaterialService.toast(error.error.message, {class: 'danger'})
+          MaterialService.toast(error.error.message, {status: 'danger'})
           this.form.enable()
         }
       )

@@ -10,7 +10,7 @@ export interface MaterialModal {
 
 export interface ToastOptions {
   duration?: number
-  class?: toastStatus
+  status?: toastStatus
 }
 
 export type toastStatus = 'success' | 'warning' | 'danger' | 'default'
@@ -20,7 +20,7 @@ export class MaterialService {
     M.toast({
       html: message,
       displayLength: options.duration || 4000,
-      classes: `toast-${options.class}` || ''
+      classes: `toast-${options.status}` || ''
     })
   }
 

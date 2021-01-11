@@ -38,7 +38,7 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
         this.positions = positions
         this.isLoading = false
       },
-      error => {
+      () => {
         this.isLoading = false
       }
       )
@@ -63,10 +63,10 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
         response => {
           const positionIndex = this.positions.findIndex(p => p._id === position._id)
           this.positions.splice(positionIndex, 1)
-          MaterialService.toast(response.message, {class: 'success'})
+          MaterialService.toast(response.message, {status: 'success'})
         },
         error => {
-          MaterialService.toast(error.error.message, {class: 'danger'})
+          MaterialService.toast(error.error.message, {status: 'danger'})
         }
       )
     }
@@ -92,18 +92,18 @@ export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy 
         (position) => {
           const index = this.positions.findIndex(p => p._id === position._id)
           this.positions[index] = position
-          MaterialService.toast('Position has been updated', {class: 'success'})
+          MaterialService.toast('Position has been updated', {status: 'success'})
         },
-        error => MaterialService.toast(error.error.message, {class: 'danger'}),
+        error => MaterialService.toast(error.error.message, {status: 'danger'}),
         completed
       )
     } else {
       this.positionS.createPosition(newPosition).subscribe(
         (position) => {
           this.positions.push(position)
-          MaterialService.toast('Position has been created', {class: 'success'})
+          MaterialService.toast('Position has been created', {status: 'success'})
         },
-        error => MaterialService.toast(error.error.message, {class: 'danger'}),
+        error => MaterialService.toast(error.error.message, {status: 'danger'}),
         completed
       )
     }

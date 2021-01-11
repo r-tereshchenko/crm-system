@@ -32,7 +32,6 @@ module.exports.getAllOrders = async function (req, res) {
             .limit(+req.query.limit)
     } catch (error) {
         errorHandler(res, error);
-
     }
 }
 
@@ -49,7 +48,7 @@ module.exports.createOrder = async function (req, res) {
             list: req.body.list,
             user: req.user.id
         }).save();
-        res.status(200).json(order);
+        res.status(201).json(order);
     } catch (error) {
         errorHandler(res, error);
     }

@@ -6,7 +6,7 @@ import { OrderPosition, Position } from '../shared/interfaces';
   providedIn: 'root'
 })
 
-export class OrderService {
+export class OrderStorageService {
   public cart: OrderPosition[] = []
   public totalPrice = 0
 
@@ -18,15 +18,17 @@ export class OrderService {
       _id: position._id
     })
 
-    const candidate = this.cart.find((p,idx) => p._id === position._id)
+    const candidate = this.cart.find(
+      (p) => p._id === position._id
+    )
 
     candidate ? candidate.quantity += position.quantity : this.cart.push(orderPosition)
     this.computePrice()
   }
 
-  private computePrice() {
-    this.totalPrice = this.cart.reduce((acc, item) => {
-      return acc += item.cost * item.quantity
+  private computePrice(): void {
+    this.totalPrice = this.cart.reduce((total, item) => {
+      return total += item.cost * item.quantity
     }, 0)
   }
 
@@ -35,5 +37,8 @@ export class OrderService {
     this.computePrice()
   }
 
-  clear() {}
+  clear() {
+    this.cart = []
+    this.totalPrice = 0
+  }
 }
