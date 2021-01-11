@@ -8,6 +8,19 @@ export interface MaterialModal {
   destroy?(): void
 }
 
+export interface MaterialTooltip extends MaterialModal {
+  options?: {
+    html?: string
+    exitDelay?: number
+    enterDelay?: number
+    margin?: number
+    inDuration?: number
+    outDuration?: number
+    position?: string
+    transitionMovement?: number
+  }
+}
+
 export interface ToastOptions {
   duration?: number
   status?: toastStatus
@@ -16,7 +29,7 @@ export interface ToastOptions {
 export type toastStatus = 'success' | 'warning' | 'danger' | 'default'
 
 export class MaterialService {
-  static toast(message: string, options: ToastOptions = {}) {
+  static toast(message: string, options: ToastOptions = {}): void {
     M.toast({
       html: message,
       displayLength: options.duration || 4000,
@@ -24,15 +37,19 @@ export class MaterialService {
     })
   }
 
-  static initializeFloatingButton(elemRef: ElementRef) {
+  static initializeFloatingButton(elemRef: ElementRef): void {
     M.FloatingActionButton.init(elemRef.nativeElement)
   }
 
-  static updateTextInputs() {
+  static updateTextInputs(): void {
     M.updateTextFields()
   }
 
   static initModal(ref: ElementRef): MaterialModal {
     return M.Modal.init(ref.nativeElement)
+  }
+
+  static initTooltip(elRef: ElementRef, options = null): MaterialTooltip {
+    return M.Tooltip.init(elRef.nativeElement, options);
   }
 }

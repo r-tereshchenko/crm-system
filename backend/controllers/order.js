@@ -1,6 +1,7 @@
 const Order = require('../models/Order');
 const errorHandler = require('../utils/errorHandler');
 
+// (GET) localhost:8080/api/order?offset=2&limit=5
 module.exports.getAllOrders = async function (req, res) {
     const filterOptions = {
         user: req.user.id
@@ -30,6 +31,8 @@ module.exports.getAllOrders = async function (req, res) {
             .sort({date: -1})
             .skip(+req.query.offset)
             .limit(+req.query.limit)
+        console.log('orders: ', orders)
+        res.status(200).json(orders)
     } catch (error) {
         errorHandler(res, error);
     }
