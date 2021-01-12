@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 
 import { MaterialTooltip, MaterialService } from '../shared/classes/material.service';
 import { OrdersService } from '../shared/services/orders.service';
-import { Order } from '../shared/interfaces';
+import { DatePickerFilter, Order } from '../shared/interfaces';
 
 @Component({
   selector: 'app-history-page',
@@ -22,11 +22,12 @@ export class HistoryPageComponent implements OnInit, AfterViewInit, OnDestroy {
   isReloading = false
   noMoreOrders = false
 
+  filter: DatePickerFilter = {}
+  loadMoreSTEP = 2
   queryOptions = {
     offset: 0,
-    limit: 2
+    limit: this.loadMoreSTEP
   }
-  loadMoreSTEP = 1
 
   // Subscriptions
   getOrdersSub: Subscription
@@ -41,7 +42,8 @@ export class HistoryPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private getOrders() {
-    this.getOrdersSub = this.ordersS.getOrders(this.queryOptions).subscribe(
+    const params = Object.assign({}, this.filter, this.queryOptions)
+    this.getOrdersSub = this.ordersS.getOrders(params).subscribe(
       (orders) => {
         this.orders = this.orders.concat(orders)
         this.isLoading = false
@@ -57,7 +59,7 @@ export class HistoryPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   loadMore() {
     this.isLoading = true
-    this.queryOptions.offset += this.loadMoreSTEP + 1
+    this.queryOptions.offset += this.loadMoreSTEP
     this.getOrders()
   }
 
@@ -65,6 +67,18 @@ export class HistoryPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isFilterVisible = !this.isFilterVisible
     this.tooltip.close()
     this.tooltip.options.html = this.isFilterVisible ? 'Close filter' : 'Open Filter'
+  }
+
+  applyFilter(filter: DatePickerFilter) {
+    this.orders = []
+    this.queryOptions.offset = 0
+    this.filter = filter
+    this.isReloading = true
+    this.getOrders()
+  }
+
+  isFiltered(): boolean {
+    return Object.keys(this.filter).length !== 0
   }
 
   ngAfterViewInit(): void {

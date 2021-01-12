@@ -21,6 +21,38 @@ export interface MaterialTooltip extends MaterialModal {
   }
 }
 
+export interface MaterialDatePicker extends MaterialModal {
+  date?: Date
+  toString?(): string
+  setDate?(): void
+  gotoDate?(): void
+}
+
+export interface MaterialDatePickerOptions {
+  autoClose?: boolean
+  format?: string
+  parse?: Function
+  defaultDate?: Date
+  setDefaultDate?: boolean
+  disableWeekends?: boolean
+  disableDayFn?: Function
+  firstDay?: number
+  minDate?: Date
+  maxDate?: Date
+  yearRange?: Number | []
+  isRTL?: boolean
+  showMonthAfterYear?: boolean
+  showDaysInNextAndPreviousMonths?: boolean
+  container?: Element
+  showClearBtn?: boolean
+  i18n?: Object
+  events?: []
+  onSelect?: Function
+  onOpen?: Function
+  onClose?: Function
+  onDraw?: Function
+}
+
 export interface ToastOptions {
   duration?: number
   status?: toastStatus
@@ -51,5 +83,14 @@ export class MaterialService {
 
   static initTooltip(elRef: ElementRef, options = null): MaterialTooltip {
     return M.Tooltip.init(elRef.nativeElement, options);
+  }
+
+  static initDatePicker(elRef: ElementRef, onClose: () => void, options: MaterialDatePickerOptions = {}): MaterialDatePicker {
+    return M.Datepicker.init(elRef.nativeElement, {
+      format: 'dd.mm.yyyy',
+      showClearBtn: true,
+      onClose,
+      ...options
+    })
   }
 }

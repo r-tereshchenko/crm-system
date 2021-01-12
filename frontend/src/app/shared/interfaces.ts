@@ -41,3 +41,9 @@ export interface OrderPosition {
   quantity: number
   _id?: string
 }
+
+export interface DatePickerFilter {
+  start?: Date
+  end?: Date
+  order?: number
+}
