@@ -24,7 +24,7 @@ export class HistoryPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   queryOptions = {
     offset: 0,
-    limit: 1
+    limit: 2
   }
   loadMoreSTEP = 1
 
@@ -57,7 +57,7 @@ export class HistoryPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   loadMore() {
     this.isLoading = true
-    this.queryOptions.offset += this.loadMoreSTEP
+    this.queryOptions.offset += this.loadMoreSTEP + 1
     this.getOrders()
   }
 
@@ -72,7 +72,6 @@ export class HistoryPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.tooltipRef,
       {html: this.isFilterVisible ? 'Close filter' : 'Open Filter'}
     )
-    console.log('tooltip: ', this.tooltip)
   }
 
   ngOnDestroy(): void {

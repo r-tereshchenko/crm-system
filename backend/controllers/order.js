@@ -31,7 +31,6 @@ module.exports.getAllOrders = async function (req, res) {
             .sort({date: -1})
             .skip(+req.query.offset)
             .limit(+req.query.limit)
-        console.log('orders: ', orders)
         res.status(200).json(orders)
     } catch (error) {
         errorHandler(res, error);
