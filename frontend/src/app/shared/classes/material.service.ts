@@ -24,8 +24,8 @@ export interface MaterialTooltip extends MaterialModal {
 export interface MaterialDatePicker extends MaterialModal {
   date?: Date
   toString?(): string
-  setDate?(): void
-  gotoDate?(): void
+  setDate?(date?: Date): void
+  gotoDate?(date?: Date): void
 }
 
 export interface MaterialDatePickerOptions {

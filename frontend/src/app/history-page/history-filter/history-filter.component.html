@@ -13,8 +13,8 @@
       </div>
 
       <div class="input-field">
-        <input #end type="text" class="datepicker">
-        <label>Конец</label>
+        <input [ngClass]="{'datepicker-danger': !isValid}" #end type="text" class="datepicker">
+        <label [ngClass]="{'label-danger': !isValid}">Конец</label>
       </div>
     </div>
   </div>
