@@ -56,7 +56,6 @@ export class HistoryFilterComponent implements AfterViewInit, OnDestroy {
     this.isValid = this.datePickerStart < this.datePickerEnd
     if (!this.isValid) {
       MaterialService.toast(`Invalid date picked. End date cannot be prior or equal to start date`, {status: 'warning'})
-      // this.datePickerEnd.gotoDate(new Date(this.datePickerStart.date))
       const date = new Date(this.datePickerStart.date)
       date.setDate(date.getDate() + 1)
       this.datePickerEnd.setDate(date)

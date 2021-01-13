@@ -93,4 +93,8 @@ export class MaterialService {
       ...options
     })
   }
+
+  static initTapTarget(elRef: ElementRef, options = {}): MaterialModal {
+    return M.TapTarget.init(elRef.nativeElement, options);
+  }
 }
