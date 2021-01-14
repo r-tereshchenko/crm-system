@@ -27,7 +27,7 @@
         class="btn waves-effect grey darken-1 btn-small"
         (click)="loadMore()"
         *ngIf="!isLoading; else loading"
-      >Загрузить еще
+      >Load more
       </button>
       <ng-template #loading>
         <app-loader></app-loader>

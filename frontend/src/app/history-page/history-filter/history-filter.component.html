@@ -3,18 +3,18 @@
     <div class="col order">
       <div class="input-field inline order-position-input">
         <input type="number" id="number" min="1" [(ngModel)]="order">
-        <label for="number">Номер заказа</label>
+        <label for="number">Order number</label>
       </div>
     </div>
     <div class="col filter-pickers">
       <div class="input-field">
         <input #start type="text" class="datepicker">
-        <label>Начало</label>
+        <label>Start</label>
       </div>
 
       <div class="input-field">
         <input [ngClass]="{'datepicker-danger': !isValid}" #end type="text" class="datepicker">
-        <label [ngClass]="{'label-danger': !isValid}">Конец</label>
+        <label [ngClass]="{'label-danger': !isValid}">End</label>
       </div>
     </div>
   </div>
@@ -23,5 +23,5 @@
     (click)="submitFilter()"
     [disabled]="!isValid"
     class="btn waves-effect wavers-light btn-small"
-  >Применить фильтр</button>
+  >Apply filter</button>
 </div>
