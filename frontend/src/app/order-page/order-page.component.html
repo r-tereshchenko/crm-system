@@ -3,7 +3,7 @@
     <a routerLink="/order">Order</a>
     <span *ngIf="isAddingItem">
       <i class="material-icons">keyboard_arrow_right</i>
-      Add item
+      {{categoryName | titlecase}}
     </span>
   </h4>
   <button

@@ -31,8 +31,6 @@ export class HistoryFilterComponent implements AfterViewInit, OnDestroy {
   submitFilter() {
     const filter: DatePickerFilter = {}
 
-
-    console.log('FILTER: ', filter)
     if (this.order) {
       filter.order = this.order
     }
@@ -63,12 +61,18 @@ export class HistoryFilterComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    console.log('start: ', this.startRef)
     this.datePickerStart = MaterialService.initDatePicker(this.startRef, this.validateDate.bind(this))
     this.datePickerEnd = MaterialService.initDatePicker(this.endRef, this.validateDate.bind(this))
   }
 
   ngOnDestroy(): void {
+    if (this.datePickerStart) {
       this.datePickerStart.destroy()
+      this.datePickerStart = null
+    }
+    if (this.datePickerEnd) {
+      this.datePickerEnd.destroy()
+      this.datePickerEnd = null
+    }
   }
 }

@@ -3,7 +3,7 @@
     <div
       *ngFor="let category of categories"
       class="card waves-effect pointer"
-      [routerLink]="['/order', category._id]"
+      [routerLink]="['/order', category.name, category._id]"
     >
       <div class="center">
         <img [src]="category.imageSrc" class="responsive-img order-img">

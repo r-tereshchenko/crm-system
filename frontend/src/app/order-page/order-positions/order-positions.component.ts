@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
 import { PositionService } from '../../shared/services/position.service';
@@ -14,9 +14,14 @@ import { MaterialService } from '../../shared/classes/material.service';
   templateUrl: './order-positions.component.html',
   styleUrls: ['./order-positions.component.scss']
 })
-export class OrderPositionsComponent implements OnInit {
+export class OrderPositionsComponent implements OnInit, OnDestroy {
 
-  positions$: Observable<Position[]>
+  positions: Position[] = []
+  isLoading = false
+
+  //Subscriptions
+  positionsSub: Subscription
+  isOrderConfirmedSub: Subscription
 
   constructor(
     private route: ActivatedRoute,
@@ -25,7 +30,8 @@ export class OrderPositionsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.positions$ = this.route.params.pipe(
+    this.isLoading = true
+    this.positionsSub = this.route.params.pipe(
       switchMap((params) => {
         return this.positionsS.getPositionsByCategoryId(params['id'])
       }),
@@ -35,7 +41,26 @@ export class OrderPositionsComponent implements OnInit {
           return p
         })
       })
-    )
+    ).subscribe(
+      (positions) => {
+        this.positions = positions
+        this.isLoading = false
+      },
+      error => {
+        console.log('Error: ', error)
+        MaterialService.toast(error?.message, {status: 'danger'})
+        this.isLoading = false
+      })
+
+    this.isOrderConfirmedSub = this.orderS.isOrderConfirmed
+      .subscribe((isConfirmed) => {
+        if (isConfirmed) {
+          this.positions.map((position) => {
+            position.quantity = 1
+            return position
+          })
+        }
+      })
   }
 
   addToCart(position: Position): void {
@@ -44,5 +69,16 @@ export class OrderPositionsComponent implements OnInit {
       `${position.name}: x${position.quantity} - has been added to your shopping cart`,
       {status: 'success'}
     )
+  }
+
+  ngOnDestroy(): void {
+    if (this.positionsSub) {
+      this.positionsSub.unsubscribe()
+      this.positionsSub = null
+    }
+    if (this.isOrderConfirmedSub) {
+      this.isOrderConfirmedSub.unsubscribe()
+      this.isOrderConfirmedSub = null
+    }
   }
 }

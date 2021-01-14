@@ -30,7 +30,7 @@ const routes: Routes = [
       {path: 'history', component: HistoryPageComponent},
       {path: 'order', component: OrderPageComponent, children: [
           {path: '', component: OrderCategoriesComponent},
-          {path: ':id', component: OrderPositionsComponent}
+          {path: ':name/:id', component: OrderPositionsComponent}
         ]
       },
       {path: 'categories', component: CategoriesPageComponent},

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { Subject } from 'rxjs';
+
 import { OrderPosition, Position } from '../shared/interfaces';
 
 @Injectable({
@@ -9,6 +11,8 @@ import { OrderPosition, Position } from '../shared/interfaces';
 export class OrderStorageService {
   public cart: OrderPosition[] = []
   public totalPrice = 0
+
+  public isOrderConfirmed = new Subject<boolean>()
 
   add(position: Position) {
     const orderPosition: OrderPosition = Object.assign({}, {

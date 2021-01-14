@@ -27,6 +27,7 @@ export class OrderPageComponent implements OnInit, AfterViewInit, OnDestroy {
   orderModal: MaterialModal
   isAddingItem: boolean
   isPending = false
+  categoryName = ''
 
   // Subscriptions
   createOrderSub: Subscription
@@ -41,6 +42,7 @@ export class OrderPageComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.route.url.subscribe(() => {
       this.isAddingItem = !!this.route.snapshot.firstChild.params['id']
+      this.categoryName = this.route.snapshot.firstChild?.params['name'] || ''
     })
   }
 
@@ -69,6 +71,7 @@ export class OrderPageComponent implements OnInit, AfterViewInit, OnDestroy {
       (newOrder) => {
         MaterialService.toast(`Order №${newOrder.order} has been successfully confirmed.`, {status: 'success'})
         this.orderStorageS.clear()
+        this.orderStorageS.isOrderConfirmed.next(true)
       },
       (error) => {
         MaterialService.toast(error.error.message, {status: 'danger'})
@@ -85,7 +88,10 @@ export class OrderPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.orderModal.destroy()
+    if (this.orderModal) {
+      this.orderModal.destroy()
+      this.orderModal = null
+    }
     if (this.createOrderSub) {
       this.createOrderSub.unsubscribe()
       this.createOrderSub = null

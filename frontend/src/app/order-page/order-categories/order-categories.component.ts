@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { CategoriesService } from '../../shared/services/categories.service';
 import { Observable } from 'rxjs';
+
+import { CategoriesService } from '../../shared/services/categories.service';
 import { Category } from '../../shared/interfaces';
 
 @Component({
